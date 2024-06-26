@@ -105,7 +105,7 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
     "email": "string",
     "password": "string"
   }
-> [!NOTE]
+> [!IMPORTANT]
 > Os campos de atualização são opcionais.
 - **Response Body:**
   ```json
