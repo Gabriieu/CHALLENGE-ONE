@@ -91,7 +91,7 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
       },
       "empty": "boolean"
     }
-  >Nessa rota é possível utilizar query params para a paginação, como, por exemplo: *?size=2&page=2*
+  >Neste endpoint é possível utilizar query params para a paginação, como, por exemplo: *?size=2&page=2*
 
 ### Update User
 
@@ -99,15 +99,14 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
 - **Method:** `PUT`
 - **Description:** Atualiza o usuário.
 - **Request Body:**
-  > [!NOTE]
-  > Os campos de atualização são opcionais.
   ```json
   {
     "name": "string",
     "email": "string",
     "password": "string"
   }
-
+> [!NOTE]
+> Os campos de atualização são opcionais.
 - **Response Body:**
   ```json
   {
