@@ -2,7 +2,8 @@
 Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next Education + Alura.
 
 # End Points
-  >**Em todas as rotas é necessária a autenticação via JWT, exceto na rota de criação de usuário.**
+>[!WARNING]
+> Em todas as rotas é necessária a autenticação via JWT, exceto na rota de criação de usuário e, obviamente, login.**
 
 
 - [User Endpoints](#user-endpoints)
