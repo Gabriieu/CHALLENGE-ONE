@@ -99,9 +99,8 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
 - **Method:** `PUT`
 - **Description:** Atualiza o usuário.
 - **Request Body:**
-> [!NOTE]
-> Os campos de atualização são opcionais.
-
+  > [!NOTE]
+  > Os campos de atualização são opcionais.
   ```json
   {
     "name": "string",
