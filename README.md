@@ -101,6 +101,7 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
 - **Request Body:**
 > [!NOTE]
 > Os campos de atualização são opcionais.
+
   ```json
   {
     "name": "string",
