@@ -25,6 +25,7 @@ public class TokenService {
                     .withIssuer("API forumhub")
                     .withSubject(usuario.getEmail())
                     .withClaim("id", usuario.getId())
+                    .withClaim("role", usuario.getRole().toString())
                     .withExpiresAt(dataExpiracao())
                     .sign(algorithm);
         } catch (JWTCreationException exception) {

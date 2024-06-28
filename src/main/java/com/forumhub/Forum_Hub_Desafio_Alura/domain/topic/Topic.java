@@ -25,7 +25,6 @@ public class Topic {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
     private String title;
     private String text;
     @CreatedDate
@@ -63,10 +62,6 @@ public class Topic {
 
     public void solved() {
         this.status = Status.SOLUCIONADO;
-    }
-
-    public void close() {
-        this.status = Status.ENCERRADO;
     }
 
 }

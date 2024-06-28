@@ -13,10 +13,17 @@ public record CommentResponseDTO(
         @JsonProperty("created_at")
         LocalDateTime createdAt,
         @JsonProperty("author_id")
-        Long authorId
+        Long authorId,
+
+        boolean solution
 ) {
 
     public CommentResponseDTO(Comment answer) {
-        this(answer.getId(), answer.getText(), answer.getTopic().getId(), answer.getCreatedAt(), answer.getUser().getId());
+        this(answer.getId(),
+                answer.getText(),
+                answer.getTopic().getId(),
+                answer.getCreatedAt(),
+                answer.getUser().getId(),
+                answer.isSolution());
     }
 }

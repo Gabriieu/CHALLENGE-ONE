@@ -53,77 +53,90 @@ public class TopicController {
         return ResponseEntity.ok().body(new TopicResponseDTO(topic));
     }
 
-    @PostMapping("/{id}/comments")
+    @PostMapping("/{topicId}/comments")
     @Transactional
     public ResponseEntity<CommentResponseDTO> createComment(@RequestBody @Valid CommentAnswerDTO answer,
-                                                            @PathVariable Long id,
+                                                            @PathVariable Long topicId,
                                                             Authentication authentication) {
         var userId = Long.parseLong(authentication.getCredentials().toString());
         var user = userRepository.getReferenceById(userId);
-        var topic = topicRepository.findById(id).orElseThrow(() -> new NotFound("Topic not found"));
-
-        if (topic.getStatus() != Status.ENCERRADO) {
+        var topic = topicRepository.findById(topicId).orElseThrow(() -> new NotFound("Topic not found"));
+        if (topic.getStatus() != Status.SOLUCIONADO) {
             var comment = commentRepository.save(new Comment(answer.text(), topic, user));
             return ResponseEntity.ok(new CommentResponseDTO(comment));
         } else {
             throw new Forbidden("This topic is closed");
         }
-
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<TopicResponseDTO> getTopicById(@PathVariable Long id) {
-        var topic = topicRepository.findById(id).orElseThrow(() -> new NotFound("Topic not found"));
+    @GetMapping("/{topicId}")
+    public ResponseEntity<TopicResponseDTO> getTopicById(@PathVariable Long topicId) {
+        var topic = topicRepository.findById(topicId).orElseThrow(() -> new NotFound("Topic not found"));
 
         return ResponseEntity.ok().body(new TopicResponseDTO(topic));
     }
 
-    @GetMapping("/{id}/comments")
+    @GetMapping("/{topicId}/comments")
     public ResponseEntity<Page<CommentResponseDTO>> getTopicComments(@PageableDefault(size = 10, sort = {"createdAt"}) Pageable pagination,
-                                                                     @PathVariable Long id) {
-        var page = commentRepository.findAllByTopicId(pagination, id).map(CommentResponseDTO::new);
+                                                                     @PathVariable Long topicId) {
+        var page = commentRepository.findAllByTopicId(pagination, topicId).map(CommentResponseDTO::new);
 
         return ResponseEntity.ok(page);
     }
 
+
     @GetMapping
     public ResponseEntity<Page<TopicResponseDTO>> getTopics(@PageableDefault(size = 10, sort = {"createdAt"}) Pageable pagination) {
+        System.out.println(pagination);
+        System.out.println("aq");
         var page = topicRepository.findAllByOrderByCreatedAtDesc(pagination).map(TopicResponseDTO::new);
         return ResponseEntity.ok(page);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{topicId}")
     @Transactional
     public ResponseEntity<TopicResponseDTO> updateTopic(@RequestBody @Valid UpdateTopicDTO topicDTO,
-                                                        @PathVariable Long id) {
-        var topic = topicRepository.findById(id).orElseThrow(() -> new NotFound("Topic not found"));
+                                                        @PathVariable Long topicId,
+                                                        Authentication authentication) {
+        var topic = topicRepository.findById(topicId).orElseThrow(() -> new NotFound("Topic not found"));
+        var userId = authentication.getCredentials().toString();
+        if (!topic.getAuthor().getId().toString().equals(userId)) {
+            throw new Forbidden("You do not have permission to perform this action");
+        }
         topic.update(topicDTO);
 
         return ResponseEntity.ok().body(new TopicResponseDTO(topic));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{topicId}")
     @Transactional
-    public ResponseEntity<Void> deleteTopic(@PathVariable Long id) {
-        topicRepository.deleteById(id);
+    public ResponseEntity<Void> deleteTopic(@PathVariable Long topicId, Authentication authentication) {
+        var userId = authentication.getCredentials().toString();
+        var topic = topicRepository.findById(topicId).orElseThrow(() -> new NotFound("Topic not found"));
+        if (!topic.getAuthor().getId().toString().equals(userId)) {
+            throw new Forbidden("You do not have permission to perform this action");
+        }
+        topicRepository.deleteById(topicId);
 
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}/solve")
+    @PatchMapping("/{topicId}/comments/{commentId}")
     @Transactional
-    public ResponseEntity<TopicResponseDTO> solve(@PathVariable Long id) {
-        var topic = topicRepository.findById(id).orElseThrow(() -> new NotFound("Topic not found"));
+    public ResponseEntity<CommentResponseDTO> markCommentAsSolution(@PathVariable Long topicId,
+                                                                    @PathVariable Long commentId,
+                                                                    Authentication authentication) {
+        var userId = authentication.getCredentials().toString();
+        var topic = topicRepository.findById(topicId).orElseThrow(() -> new NotFound("Topic not found"));
+        var comment = commentRepository.findById(commentId).orElseThrow(() -> new NotFound("Comment not found"));
+        if (!topic.getAuthor().getId().toString().equals(userId) || !comment.getTopic().getId().equals(topic.getId())) {
+            throw new Forbidden("You do not have permission to perform this action");
+        }
+
+        comment.markAsSolution();
         topic.solved();
-        return ResponseEntity.ok(new TopicResponseDTO(topic));
+
+        return ResponseEntity.ok(new CommentResponseDTO(comment));
     }
 
-    @PatchMapping("/{id}/close")
-    @Transactional
-    public ResponseEntity<TopicResponseDTO> closeTopic(@PathVariable Long id) {
-        var topic = topicRepository.findById(id).orElseThrow(() -> new NotFound("Topic not found"));
-        topic.close();
-
-        return ResponseEntity.ok(new TopicResponseDTO(topic));
-    }
 }

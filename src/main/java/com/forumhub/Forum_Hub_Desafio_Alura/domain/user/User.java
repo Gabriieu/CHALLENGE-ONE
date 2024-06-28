@@ -33,13 +33,17 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
     private boolean isActive;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserRoles role = UserRoles.USER;
 
-    public User(CreateUserDTO payload) {
+    public User(CreateUserDTO payload, String hash) {
         this.name = payload.name();
         this.email = payload.email();
-        this.password = payload.password();
+        this.password = hash;
         this.isActive = true;
     }
+
 
     public void update(UserUpdateDTO payload) {
         if (payload.name() != null) {
@@ -59,12 +63,17 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (this.role == UserRoles.ADMIN) {
+            return List.of(
+                    new SimpleGrantedAuthority("ROLE_ADMIN"),
+                    new SimpleGrantedAuthority("ROLE_USER"));
+        }
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
     public String getUsername() {
-        return email;
+        return this.email;
     }
 
     @Override
@@ -86,4 +95,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }

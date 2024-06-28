@@ -33,11 +33,17 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+    @Column(columnDefinition = "boolean default false")
+    private boolean solution;
 
     public Comment(String text, Topic topic, User user) {
         this.text = text;
         this.topic = topic;
         this.createdAt = LocalDateTime.now();
         this.user = user;
+    }
+
+    public void markAsSolution() {
+        this.solution = true;
     }
 }
