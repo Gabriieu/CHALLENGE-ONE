@@ -419,7 +419,7 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
     "category": "string"
   }
 > [!NOTE]
-> **Categorias disponíveis**: Backend, Frontend, Mobile, DevOps, UI/UX Design, Data Science, Gestão e Inovação e Inteligência Artificial.
+> **Categorias disponíveis**: Backend, Frontend, Mobile, DevOps, UI/UX Design, Data Science, Gestão e Inovação, Inteligência Artificial, Programação, Desenvolvimento Web, Desenvolvimento Mobile, Segurança da Informação, Cloud Computing, Design, Blockchain, Desenvolvimento de Jogos, Marketing, IoT, e Gestão de Projetos.
 - **Response Body:**
     ```json
     {
@@ -498,8 +498,8 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
   }
 > [!NOTE]
 > Campos opcionais
-> 
-> **Categorias disponíveis:** Backend, Frontend, Mobile, DevOps, UI/UX Design, Data Science, Gestão e Inovação e Inteligência Artificial.
+>
+> **Categorias disponíveis**: Backend, Frontend, Mobile, DevOps, UI/UX Design, Data Science, Gestão e Inovação, Inteligência Artificial, Programação, Desenvolvimento Web, Desenvolvimento Mobile, Segurança da Informação, Cloud Computing, Design, Blockchain, Desenvolvimento de Jogos, Marketing, IoT, e Gestão de Projetos.
 - **Response Body:**
     ```json
     {
