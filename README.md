@@ -288,8 +288,8 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
 - **Method:** `DELETE`
 - **Description:** Deleta o tópico.
 - **Response Body:**
-  > [!NOTE]
-  > Não requer corpo de requisição; a resposta será `204 - No Content`.
+> [!NOTE]
+> Não requer corpo de requisição; a resposta será `204 - No Content`.
 
 ## Comments Endpoints
 
@@ -518,10 +518,11 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
 - **Response Body:**
 > [!NOTE]
 > Não requer corpo de requisição; a resposta será `204 - No Content`.
+> Somente administradores tem a permissão de excluir cursos.
 
 
 
-# Diagrama do Banco de Dados
+# Diagrama Proposto para o Banco de Dados
 ![img.png](img.png)
 
 
