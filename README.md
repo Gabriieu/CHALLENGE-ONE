@@ -2,7 +2,7 @@
 Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next Education + Alura.
 
 # End Points
->[!WARNING]
+>[!NOTE]
 > Em todas as rotas é necessária a autenticação via JWT, exceto na rota de criação de usuário e, obviamente, login.
 
 
@@ -15,13 +15,20 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
 - [Login Endpoint](#login-endpoint)
     - [User Login](#user-login)
 - [Topics Endpoints](#topics-endpoints)
-    - [Get All Topics](#get-all-topics)
     - [Create Topic](#create-topic)
+    - [Get Topic By ID](#get-topic-by-id)
+    - [Get All Topics](#get-topics)
     - [Update Topic](#update-topic)
     - [Delete Topic](#delete-topic)
+  - [Comments Endpoints](#comments-endpoints)
+    - [Create Comment](#create-comment)
+    - [Get Topic Comments](#get-topic-comments)
+    - [Get Comment By ID](#get-comment-by-id)
+    - [Delete Comment](#delete-comment)
 - [Courses Endpoints](#courses-endpoints)
-    - [Get All Courses](#get-all-courses)
     - [Create Course](#create-course)
+    - [Get Courses](#get-courses)
+    - [Get Course By ID](#get-course-by-id)
     - [Update Course](#update-course)
     - [Delete Course](#delete-course)
 
@@ -39,6 +46,14 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
     "email": "string",
     "password": "string"
   }
+- **Response Body:**
+  ```json
+  {
+    "id": "number",
+    "name": "string",
+    "role": "string",
+    "is_active": "boolean"
+  }
 
 ### Get User By ID
 
@@ -49,7 +64,9 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
   ```json
   {
     "id": "number",
-    "name": "string"
+    "name": "string",
+    "role": "string",
+    "is_active": "boolean"
   }
 
 ### Get Users
@@ -57,42 +74,45 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
 - **URL:** `/user`
 - **Method:** `GET`
 - **Description:** Obtém lista de usuários.
-  - **Response Body:**
-    ```json
-    {
-      "totalPages": "number",
-      "totalElements": "number",
-      "size": 10,
-      "content": [
-          {
-              "id": "number",
-              "name": "string"
-          }
-      ],
-      "number": "number",
-      "sort": {
-          "empty": "boolean",
-          "sorted": "boolean",
-          "unsorted": "boolean"
-      },
-      "first": "boolean",
-      "last": "boolean",
-      "numberOfElements": "number",
-      "pageable": {
-          "pageNumber": "number",
-          "pageSize": 10,
-          "sort": {
-              "empty": "boolean",
-              "sorted": "boolean",
-              "unsorted": "boolean"
-          },
-          "offset": "number",
-          "paged": "boolean",
-          "unpaged": "boolean"
-      },
-      "empty": "boolean"
-    }
-  >Neste endpoint é possível utilizar query params para a paginação, como, por exemplo: *?size=2&page=2*
+- **Response Body:**
+  ```json
+  {
+    "totalPages": "number",
+    "totalElements": "number",
+    "size": "number",
+    "content": [
+        {
+            "id": "number",
+            "name": "string",
+            "role": "string",
+            "is_active": "boolean"
+        }
+    ],
+    "number": "number",
+    "sort": {
+        "empty": "boolean",
+        "sorted": "boolean",
+        "unsorted": "boolean"
+    },
+    "first": "boolean",
+    "last": "boolean",
+    "numberOfElements": "number",
+    "pageable": {
+        "pageNumber": "number",
+        "pageSize": "number",
+        "sort": {
+            "empty": "boolean",
+            "sorted": "boolean",
+            "unsorted": "boolean"
+        },
+        "offset": "number",
+        "paged": "boolean",
+        "unpaged": "boolean"
+    },
+    "empty": "boolean"
+  }
+>[!NOTE]
+>Neste endpoint é possível utilizar query params para a paginação, como, por exemplo: *?size=2&page=2*
 
 ### Update User
 
@@ -106,27 +126,29 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
     "email": "string",
     "password": "string"
   }
-> [!IMPORTANT]
-> Os campos de atualização são opcionais.
 - **Response Body:**
   ```json
   {
     "id": "number",
-    "name": "string"
+    "name": "string",
+    "role": "string",
+    "is_active": "boolean"
   }
+> [!NOTE]
+> Os campos de atualização são opcionais.
 
 ### Delete User
 
 - **URL:** `/user/id`
 - **Method:** `DELETE`
 - **Description:** Deleta o usuário.
-- **Request Body:**
-  > [!TIP]
-  > Não requer corpo de requisição; a resposta é um 204 No Content.
+- **Response Body:**
+> [!NOTE]
+> Não requer corpo de requisição; a resposta será `204 - No Content`.
 
 ## Login Endpoint
 
-### Login
+### User Login
 
 - **URL:** `/login`
 - **Method:** `POST`
@@ -142,6 +164,362 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
   {
     "token": "string"
   }
+
+## Topics Endpoints
+
+### Create Topic
+
+- **URL:** `/topic`
+- **Method:** `POST`
+- **Description:** Criação de tópico/postagem.
+- **Request Body:**
+  ```json
+  {
+    "title": "string",
+    "text": "string",
+    "course": "number"
+  }
+- **Response Body:**
+    ```json
+    {
+      "id": "number",
+      "title": "string",
+      "text": "string",
+      "status": "string",
+      "author": "string",
+      "course": "string",
+      "created_at": "localdatetime"
+    }
+
+### Get Topic By ID
+
+- **URL:** `/topic/id`
+- **Method:** `GET`
+- **Description:** Obtém o tópico pelo id.
+- **Response Body:**
+  ```json
+  {
+    "id": "number",
+    "title": "string",
+    "text": "string",
+    "status": "string",
+    "author": "string",
+    "course": "string",
+    "created_at": "localdatetime"
+  }
+
+### Get Topics
+
+- **URL:** `/topic`
+- **Method:** `GET`
+- **Description:** Obtém uma lista de tópicos.
+- **Response Body:**
+  ```json
+  {
+    "totalPages": "number",
+    "totalElements": "number",
+    "size": "number",
+    "content": [
+        {
+            "id": "number",
+            "title": "string",
+            "text": "string",
+            "status": "string",
+            "author": "string",
+            "course": "string",
+            "created_at": "localdatetime"
+        }
+    ],
+    "number": "number",
+    "sort": {
+        "empty": "boolean",
+        "sorted": "boolean",
+        "unsorted": "boolean"
+    },
+    "first": "boolean",
+    "last": "boolean",
+    "numberOfElements": "number",
+    "pageable": {
+        "pageNumber": "number",
+        "pageSize": "number",
+        "sort": {
+            "empty": "boolean",
+            "sorted": "boolean",
+            "unsorted": "boolean"
+        },
+        "offset": "number",
+        "paged": "boolean",
+        "unpaged": "boolean"
+    },
+    "empty": "boolean"
+  }
+>[!NOTE]
+>Neste endpoint é possível utilizar query params para a paginação, como, por exemplo: *?size=2&page=2*
+
+### Update Topic
+
+- **URL:** `/topic/id`
+- **Method:** `PUT`
+- **Description:** Atualização do tópico.
+- **Request Body:**
+  ```json
+  {
+    "title": "string",
+    "text": "string",
+    "status": "string"
+  }
+> [!NOTE]
+> Os campos de atualização são opcionais.
+- **Response Body:**
+    ```json
+    {
+      "id": "number",
+      "title": "string",
+      "text": "string",
+      "status": "string",
+      "author": "string",
+      "course": "string",
+      "created_at": "localdatetime"
+    }
+
+### Delete Topic
+
+- **URL:** `/topic/id`
+- **Method:** `DELETE`
+- **Description:** Deleta o tópico.
+- **Response Body:**
+  > [!NOTE]
+  > Não requer corpo de requisição; a resposta será `204 - No Content`.
+
+## Comments Endpoints
+
+### Create Comment
+
+- **URL:** `/topic/id/comments`
+- **Method:** `POST`
+- **Description:** Criação de comentário.
+- **Request Body:**
+  ```json
+  {
+    "text": "string",
+  }
+
+- **Response Body:**
+    ```json
+    {
+     "id": "number",
+     "text": "string",
+     "solution": "boolean",
+     "topic_id": "number",
+     "created_at": "localdatetime",
+     "author_id": "number"
+    }
+
+### Get Topic Comments
+
+- **URL:** `/topic/id/comments`
+- **Method:** `GET`
+- **Description:** Obtém os comentários do tópico.
+- **Response Body:**
+  ```json
+  {
+    "totalPages": "number",
+    "totalElements": "number",
+    "size": "number",
+    "content": [
+        {
+            "id": "number",
+            "text": "string",
+            "solution": "boolean",
+            "topic_id": "number",
+            "created_at": "localdatetime",
+            "author_id": "number"
+        }
+    ],
+    "number": "number",
+    "sort": {
+        "empty": "boolean",
+        "sorted": "boolean",
+        "unsorted": "boolean"
+    },
+    "first": "boolean",
+    "last": "boolean",
+    "numberOfElements": "number",
+    "pageable": {
+        "pageNumber": "number",
+        "pageSize": "number",
+        "sort": {
+            "empty": "boolean",
+            "sorted": "boolean",
+            "unsorted": "boolean"
+        },
+        "offset": "number",
+        "paged": "boolean",
+        "unpaged": "boolean"
+    },
+    "empty": "boolean"
+  }
+>[!NOTE]
+>Neste endpoint é possível utilizar query params para a paginação, como, por exemplo: *?size=2&page=2*
+
+### Get Comment By ID
+
+- **URL:** `/comments/id`
+- **Method:** `GET`
+- **Description:** Obtém um comentário específico.
+- **Response Body:**
+  ```json
+  {
+   "id": "number",
+   "text": "string",
+   "solution": "boolean",
+   "topic_id": "number",
+   "created_at": "localdatetime",
+   "author_id": "number"
+  }
+
+### Mark Comment As Solution
+
+- **URL:** `/topic/topic_id/comments/comment_id`
+- **Method:** `PATCH`
+- **Description:** Marca um comentário como solução.
+- **Response Body:**
+  ```json
+  {
+    "id": "number",
+    "text": "string",
+    "solution": "boolean",
+    "topic_id": "number",
+    "created_at": "localdatetime",
+    "author_id": "number"
+  }
+>[!NOTE]
+> Somente o dono do tópico tem a permissão de marcar um comentário como solução e desde que esse comentário pertença ao seu tópico e, além disso, após haver um comentário como solução o tópico ficará fechado para novos comentários.
+
+### Delete Comment
+
+- **URL:** `/comments/id`
+- **Method:** `GET`
+- **Description:** Deleta um comentário específico.
+- **Response Body:**
+> [!NOTE]
+> Não requer corpo de requisição; a resposta será `204 - No Content`.
+
+## Courses Endpoints
+
+### Create Course
+
+- **URL:** `/course`
+- **Method:** `POST`
+- **Description:** Criação de curso.
+- **Request Body:**
+  ```json
+  {
+    "name": "string",
+    "category": "string"
+  }
+> [!NOTE]
+> **Categorias disponíveis**: Backend, Frontend, Mobile, DevOps, UI/UX Design, Data Science, Gestão e Inovação e Inteligência Artificial.
+- **Response Body:**
+    ```json
+    {
+      "id": "number",
+      "name": "string",
+      "category": "string"
+    }
+> [!NOTE]
+> Somente administradores tem a permissão de criar cursos.
+
+### Get Courses
+
+- **URL:** `/course`
+- **Method:** `GET`
+- **Description:** Obtém os cursos.
+- **Response Body:**
+    ```json
+    {
+    "totalPages": "number",
+    "totalElements": "number",
+    "size": "number",
+    "content": [
+        {
+            "id": "number",
+            "name": "string",
+            "category": "string"
+        }
+    ],
+    "number": "number",
+    "sort": {
+        "empty": "boolean",
+        "sorted": "boolean",
+        "unsorted": "boolean"
+    },
+    "first": "boolean",
+    "last": "boolean",
+    "numberOfElements": "number",
+    "pageable": {
+        "pageNumber": "number",
+        "pageSize": "number",
+        "sort": {
+            "empty": "boolean",
+            "sorted": "boolean",
+            "unsorted": "boolean"
+        },
+        "offset": "number",
+        "paged": "boolean",
+        "unpaged": "boolean"
+    },
+    "empty": "boolean"
+    }
+
+### Get Course By ID
+
+- **URL:** `/course/id`
+- **Method:** `GET`
+- **Description:** Obtém um curso específico.
+- **Response Body:**
+    ```json
+    {
+      "id": "number",
+      "name": "string",
+      "category": "string"
+    }
+
+### Update Course
+
+- **URL:** `/course/id`
+- **Method:** `PUT`
+- **Description:** Atualização de curso.
+- **Request Body:**
+  ```json
+  {
+    "name": "string",
+    "category": "string"
+  }
+> [!NOTE]
+> Campos opcionais
+> 
+> **Categorias disponíveis:** Backend, Frontend, Mobile, DevOps, UI/UX Design, Data Science, Gestão e Inovação e Inteligência Artificial.
+- **Response Body:**
+    ```json
+    {
+      "id": "number",
+      "name": "string",
+      "category": "string"
+    }
+> [!NOTE]
+> Somente administradores tem a permissão de atualizar cursos.
+
+### Delete Course
+
+- **URL:** `/course/id`
+- **Method:** `DELETE`
+- **Description:** Deleta um curso específico.
+- **Response Body:**
+> [!NOTE]
+> Não requer corpo de requisição; a resposta será `204 - No Content`.
+
+
 
 # Diagrama do Banco de Dados
 ![img.png](img.png)

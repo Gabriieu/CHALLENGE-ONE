@@ -58,6 +58,9 @@ public class Topic {
         if (topicDTO.text() != null) {
             this.text = topicDTO.text();
         }
+        if (topicDTO.status() != null) {
+            this.status = topicDTO.status();
+        }
     }
 
     public void solved() {

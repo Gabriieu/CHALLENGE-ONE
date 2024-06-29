@@ -6,9 +6,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 
 public record UpdateCourseDTO(
-        @NotBlank
         String name,
-        @Enumerated(EnumType.STRING)
         Categories category
 ) {
 }

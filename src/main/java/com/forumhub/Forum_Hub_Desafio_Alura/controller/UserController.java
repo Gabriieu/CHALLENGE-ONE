@@ -62,6 +62,11 @@ public class UserController {
         if (!user.getId().toString().equals(userRequestId) && !isAdmin) {
             throw new Forbidden("You do not have permission to perform this action");
         }
+
+        if(userData.password() != null){
+            String encodedPassword = passwordEncoder.encode(userData.password());
+            user.setHash(encodedPassword);
+        }
         user.update(userData);
         return ResponseEntity.ok(new UserResponseDTO(user));
     }

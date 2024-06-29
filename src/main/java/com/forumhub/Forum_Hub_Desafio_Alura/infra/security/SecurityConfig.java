@@ -29,6 +29,8 @@ public class SecurityConfig {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers(HttpMethod.POST, "/course").hasRole("ADMIN");
+                    req.requestMatchers(HttpMethod.PUT, "/course/**").hasRole("ADMIN");
+                    req.requestMatchers(HttpMethod.DELETE, "/course/**").hasRole("ADMIN");
                     req.requestMatchers(HttpMethod.POST, "/login").permitAll();
                     req.requestMatchers(HttpMethod.POST, "/user").permitAll();
                     req.requestMatchers(HttpMethod.GET, "/topic/**").permitAll();

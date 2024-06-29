@@ -52,9 +52,10 @@ public class User implements UserDetails {
         if (payload.email() != null) {
             this.email = payload.email();
         }
-        if (payload.password() != null) {
-            this.password = payload.password();
-        }
+    }
+
+    public void setHash(String hash) {
+        this.password = hash;
     }
 
     public void delete() {

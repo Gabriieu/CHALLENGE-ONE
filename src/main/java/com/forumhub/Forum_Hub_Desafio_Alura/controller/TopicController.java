@@ -2,7 +2,7 @@ package com.forumhub.Forum_Hub_Desafio_Alura.controller;
 
 import com.forumhub.Forum_Hub_Desafio_Alura.domain.comment.Comment;
 import com.forumhub.Forum_Hub_Desafio_Alura.domain.comment.CommentRepository;
-import com.forumhub.Forum_Hub_Desafio_Alura.domain.comment.dto.CommentAnswerDTO;
+import com.forumhub.Forum_Hub_Desafio_Alura.domain.comment.dto.CreateCommentDTO;
 import com.forumhub.Forum_Hub_Desafio_Alura.domain.comment.dto.CommentResponseDTO;
 import com.forumhub.Forum_Hub_Desafio_Alura.domain.course.CourseRepository;
 import com.forumhub.Forum_Hub_Desafio_Alura.domain.topic.Status;
@@ -55,14 +55,14 @@ public class TopicController {
 
     @PostMapping("/{topicId}/comments")
     @Transactional
-    public ResponseEntity<CommentResponseDTO> createComment(@RequestBody @Valid CommentAnswerDTO answer,
+    public ResponseEntity<CommentResponseDTO> createComment(@RequestBody @Valid CreateCommentDTO commentDTO,
                                                             @PathVariable Long topicId,
                                                             Authentication authentication) {
         var userId = Long.parseLong(authentication.getCredentials().toString());
         var user = userRepository.getReferenceById(userId);
         var topic = topicRepository.findById(topicId).orElseThrow(() -> new NotFound("Topic not found"));
         if (topic.getStatus() != Status.SOLUCIONADO) {
-            var comment = commentRepository.save(new Comment(answer.text(), topic, user));
+            var comment = commentRepository.save(new Comment(commentDTO.text(), topic, user));
             return ResponseEntity.ok(new CommentResponseDTO(comment));
         } else {
             throw new Forbidden("This topic is closed");
@@ -87,8 +87,6 @@ public class TopicController {
 
     @GetMapping
     public ResponseEntity<Page<TopicResponseDTO>> getTopics(@PageableDefault(size = 10, sort = {"createdAt"}) Pageable pagination) {
-        System.out.println(pagination);
-        System.out.println("aq");
         var page = topicRepository.findAllByOrderByCreatedAtDesc(pagination).map(TopicResponseDTO::new);
         return ResponseEntity.ok(page);
     }
