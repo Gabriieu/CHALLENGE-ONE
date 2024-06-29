@@ -3,7 +3,7 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
 
 # End Points
 >[!NOTE]
-> Em todas as rotas é necessária a autenticação via JWT, exceto na rota de criação de usuário e, obviamente, login.
+> A autenticação não é necessária para criar usuário, fazer login, e ler tópicos e comentários. No entanto, todas as outras operações exigem autenticação via JWT.
 
 
 - [User Endpoints](#user-endpoints)
