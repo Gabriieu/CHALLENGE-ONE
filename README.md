@@ -1,6 +1,20 @@
 # Challenge Fórum Hub
 Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next Education + Alura.
 
+
+## Configurações para Execução do Projeto
+
+### Pré-requisitos
+- JDK 17 ou superior
+- Maven 3.9.6 ou superior
+
+### Configuração do Banco de Dados
+- MySQL.
+- Crie um banco de dados chamado `forumhub`.
+- Preencha as credenciais de acesso ao seu banco de dados no arquivo *application.properties*
+  - `spring.datasource.username=seuUsuario`
+  - `spring.datasource.password=suaSenha`
+
 # End Points
 >[!NOTE]
 > A autenticação não é necessária para criar usuário, fazer login, e ler tópicos e comentários. No entanto, todas as outras operações exigem autenticação via JWT.
