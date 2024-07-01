@@ -2,8 +2,8 @@ package com.forumhub.Forum_Hub_Desafio_Alura.controller;
 
 import com.forumhub.Forum_Hub_Desafio_Alura.domain.comment.Comment;
 import com.forumhub.Forum_Hub_Desafio_Alura.domain.comment.CommentRepository;
-import com.forumhub.Forum_Hub_Desafio_Alura.domain.comment.dto.CreateCommentDTO;
 import com.forumhub.Forum_Hub_Desafio_Alura.domain.comment.dto.CommentResponseDTO;
+import com.forumhub.Forum_Hub_Desafio_Alura.domain.comment.dto.CreateCommentDTO;
 import com.forumhub.Forum_Hub_Desafio_Alura.domain.course.CourseRepository;
 import com.forumhub.Forum_Hub_Desafio_Alura.domain.topic.Status;
 import com.forumhub.Forum_Hub_Desafio_Alura.domain.topic.Topic;
@@ -76,6 +76,7 @@ public class TopicController {
         return ResponseEntity.ok().body(new TopicResponseDTO(topic));
     }
 
+
     @GetMapping("/{topicId}/comments")
     public ResponseEntity<Page<CommentResponseDTO>> getTopicComments(@PageableDefault(size = 10, sort = {"createdAt"}) Pageable pagination,
                                                                      @PathVariable Long topicId) {
@@ -86,7 +87,13 @@ public class TopicController {
 
 
     @GetMapping
-    public ResponseEntity<Page<TopicResponseDTO>> getTopics(@PageableDefault(size = 10, sort = {"createdAt"}) Pageable pagination) {
+    public ResponseEntity<Page<TopicResponseDTO>> getTopics(@RequestParam(required = false) String title,
+                                                            @PageableDefault(size = 10, sort = {"createdAt"}) Pageable pagination) {
+        if (title != null && !title.isEmpty()) {
+            var page = topicRepository.findAllByTitleContainingIgnoreCaseOrderByCreatedAtDesc(title, pagination).map(TopicResponseDTO::new);
+
+            return ResponseEntity.ok(page);
+        }
         var page = topicRepository.findAllByOrderByCreatedAtDesc(pagination).map(TopicResponseDTO::new);
         return ResponseEntity.ok(page);
     }

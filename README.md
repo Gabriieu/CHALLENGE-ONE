@@ -1,24 +1,27 @@
 # Challenge Fórum Hub
-Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next Education + Alura.
 
+Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next Education + Alura.
 
 ## Configurações para Execução do Projeto
 
 ### Pré-requisitos
+
 - JDK 17 ou superior
 - Maven 3.9.6 ou superior
 
 ### Configuração do Banco de Dados
+
 - MySQL.
 - Crie um banco de dados chamado `forumhub`.
 - Preencha as credenciais de acesso ao seu banco de dados no arquivo *application.properties*
-  - `spring.datasource.username=seuUsuario`
-  - `spring.datasource.password=suaSenha`
+    - `spring.datasource.username=seuUsuario`
+    - `spring.datasource.password=suaSenha`
 
 # End Points
->[!NOTE]
-> A autenticação não é necessária para criar usuário, fazer login, e ler tópicos e comentários. No entanto, todas as outras operações exigem autenticação via JWT.
 
+> [!NOTE]
+> A autenticação não é necessária para criar usuário, fazer login, e ler tópicos e comentários. No entanto, todas as
+> outras operações exigem autenticação via JWT.
 
 - [User Endpoints](#user-endpoints)
     - [Create User](#create-user)
@@ -35,10 +38,10 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
     - [Update Topic](#update-topic)
     - [Delete Topic](#delete-topic)
 - [Comments Endpoints](#comments-endpoints)
-  - [Create Comment](#create-comment)
-  - [Get Topic Comments](#get-topic-comments)
-  - [Get Comment By ID](#get-comment-by-id)
-  - [Delete Comment](#delete-comment)
+    - [Create Comment](#create-comment)
+    - [Get Topic Comments](#get-topic-comments)
+    - [Get Comment By ID](#get-comment-by-id)
+    - [Delete Comment](#delete-comment)
 - [Courses Endpoints](#courses-endpoints)
     - [Create Course](#create-course)
     - [Get Courses](#get-courses)
@@ -125,8 +128,9 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
     },
     "empty": "boolean"
   }
->[!NOTE]
->Neste endpoint é possível utilizar query params para a paginação, como, por exemplo: *?size=2&page=2*
+
+> [!NOTE]
+> Neste endpoint é possível utilizar query params para a paginação, como, por exemplo: *?size=2&page=2*
 
 ### Update User
 
@@ -148,6 +152,7 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
     "role": "string",
     "is_active": "boolean"
   }
+
 > [!NOTE]
 > Os campos de atualização são opcionais.
 
@@ -157,6 +162,7 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
 - **Method:** `DELETE`
 - **Description:** Deleta o usuário.
 - **Response Body:**
+
 > [!NOTE]
 > Não requer corpo de requisição; a resposta será `204 - No Content`.
 
@@ -267,8 +273,10 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
     },
     "empty": "boolean"
   }
->[!NOTE]
->Neste endpoint é possível utilizar query params para a paginação, como, por exemplo: *?size=2&page=2*
+
+> [!NOTE]
+> Neste endpoint é possível utilizar query params para a paginação, como, por exemplo: *?size=2&page=2* e/ou buscar pelo
+> título do tópico utilizando: *?title=umTituloAqui*
 
 ### Update Topic
 
@@ -282,8 +290,10 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
     "text": "string",
     "status": "string"
   }
+
 > [!NOTE]
 > Os campos de atualização são opcionais.
+
 - **Response Body:**
     ```json
     {
@@ -302,6 +312,7 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
 - **Method:** `DELETE`
 - **Description:** Deleta o tópico.
 - **Response Body:**
+
 > [!NOTE]
 > Não requer corpo de requisição; a resposta será `204 - No Content`.
 
@@ -373,8 +384,9 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
     },
     "empty": "boolean"
   }
->[!NOTE]
->Neste endpoint é possível utilizar query params para a paginação, como, por exemplo: *?size=2&page=2*
+
+> [!NOTE]
+> Neste endpoint é possível utilizar query params para a paginação, como, por exemplo: *?size=2&page=2*
 
 ### Get Comment By ID
 
@@ -407,8 +419,10 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
     "created_at": "localdatetime",
     "author_id": "number"
   }
->[!NOTE]
-> Somente o dono do tópico tem a permissão de marcar um comentário como solução e desde que esse comentário pertença ao seu tópico e, além disso, após haver um comentário como solução o tópico ficará fechado para novos comentários.
+
+> [!NOTE]
+> Somente o dono do tópico tem a permissão de marcar um comentário como solução e desde que esse comentário pertença ao
+> seu tópico e, além disso, após haver um comentário como solução o tópico ficará fechado para novos comentários.
 
 ### Delete Comment
 
@@ -416,6 +430,7 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
 - **Method:** `GET`
 - **Description:** Deleta um comentário específico.
 - **Response Body:**
+
 > [!NOTE]
 > Não requer corpo de requisição; a resposta será `204 - No Content`.
 
@@ -432,8 +447,12 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
     "name": "string",
     "category": "string"
   }
+
 > [!NOTE]
-> **Categorias disponíveis**: Backend, Frontend, Mobile, DevOps, UI/UX Design, Data Science, Gestão e Inovação, Inteligência Artificial, Programação, Desenvolvimento Web, Desenvolvimento Mobile, Segurança da Informação, Cloud Computing, Design, Blockchain, Desenvolvimento de Jogos, Marketing, IoT, e Gestão de Projetos.
+> **Categorias disponíveis**: Backend, Frontend, Mobile, DevOps, UI/UX Design, Data Science, Gestão e Inovação,
+> Inteligência Artificial, Programação, Desenvolvimento Web, Desenvolvimento Mobile, Segurança da Informação, Cloud
+> Computing, Design, Blockchain, Desenvolvimento de Jogos, Marketing, IoT, e Gestão de Projetos.
+
 - **Response Body:**
     ```json
     {
@@ -441,6 +460,7 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
       "name": "string",
       "category": "string"
     }
+
 > [!NOTE]
 > Somente administradores tem a permissão de criar cursos.
 
@@ -510,10 +530,14 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
     "name": "string",
     "category": "string"
   }
+
 > [!NOTE]
 > Campos opcionais
 >
-> **Categorias disponíveis**: Backend, Frontend, Mobile, DevOps, UI/UX Design, Data Science, Gestão e Inovação, Inteligência Artificial, Programação, Desenvolvimento Web, Desenvolvimento Mobile, Segurança da Informação, Cloud Computing, Design, Blockchain, Desenvolvimento de Jogos, Marketing, IoT, e Gestão de Projetos.
+> **Categorias disponíveis**: Backend, Frontend, Mobile, DevOps, UI/UX Design, Data Science, Gestão e Inovação,
+> Inteligência Artificial, Programação, Desenvolvimento Web, Desenvolvimento Mobile, Segurança da Informação, Cloud
+> Computing, Design, Blockchain, Desenvolvimento de Jogos, Marketing, IoT, e Gestão de Projetos.
+
 - **Response Body:**
     ```json
     {
@@ -521,6 +545,7 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
       "name": "string",
       "category": "string"
     }
+
 > [!NOTE]
 > Somente administradores tem a permissão de atualizar cursos.
 
@@ -530,18 +555,17 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
 - **Method:** `DELETE`
 - **Description:** Deleta um curso específico.
 - **Response Body:**
+
 > [!NOTE]
 > Não requer corpo de requisição; a resposta será `204 - No Content`.
 > Somente administradores tem a permissão de excluir cursos.
 
-
-
 # Diagrama Proposto para o Banco de Dados
+
 ![img.png](img.png)
 
-
-
 ### Reference Documentation
+
 For further reference, please consider the following sections:
 
 * [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
@@ -554,6 +578,7 @@ For further reference, please consider the following sections:
 * [Spring Security](https://docs.spring.io/spring-boot/docs/3.3.1/reference/htmlsingle/index.html#web.security)
 
 ### Guides
+
 The following guides illustrate how to use some features concretely:
 
 * [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
@@ -569,7 +594,8 @@ The following guides illustrate how to use some features concretely:
 ### Maven Parent overrides
 
 Due to Maven's design, elements are inherited from the parent POM to the project POM.
-While most of the inheritance is fine, it also inherits unwanted elements like `<license>` and `<developers>` from the parent.
+While most of the inheritance is fine, it also inherits unwanted elements like `<license>` and `<developers>` from the
+parent.
 To prevent this, the project POM contains empty overrides for these elements.
 If you manually switch to a different parent and actually want the inheritance, you need to remove those overrides.
 
