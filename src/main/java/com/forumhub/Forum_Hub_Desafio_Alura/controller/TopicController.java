@@ -98,6 +98,37 @@ public class TopicController {
         return ResponseEntity.ok(page);
     }
 
+    @GetMapping("/filter")
+    public ResponseEntity<Page<TopicResponseDTO>> getTopicsByCourseAndStatus(@RequestParam(required = false) String course,
+                                                                             @RequestParam(required = false) String status,
+                                                                             @PageableDefault(size = 10, sort = {"createdAt"}) Pageable pagination) {
+        Status statusEnum = null;
+        if (status != null) {
+            try {
+                statusEnum = Status.valueOf(status.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                throw new IllegalArgumentException("Invalid status value: " + status);
+            }
+        }
+
+        if (course != null && !course.isEmpty() && statusEnum != null) {
+            System.out.println(1);
+            System.out.println(statusEnum);
+            var page = topicRepository.findAllByCourseNameAndStatusIsOrderByCreatedAtDesc(course, statusEnum, pagination).map(TopicResponseDTO::new);
+            return ResponseEntity.ok(page);
+        } else if (course != null && !course.isEmpty()) {
+            System.out.println(2);
+            System.out.println(statusEnum);
+            var page = topicRepository.findAllByCourseNameOrderByCreatedAtDesc(course, pagination).map(TopicResponseDTO::new);
+            return ResponseEntity.ok(page);
+        } else {
+            System.out.println(3);
+            System.out.println(statusEnum);
+            var page = topicRepository.findAllByStatusOrderByCreatedAtDesc(statusEnum, pagination).map(TopicResponseDTO::new);
+            return ResponseEntity.ok(page);
+        }
+    }
+
     @PutMapping("/{topicId}")
     @Transactional
     public ResponseEntity<TopicResponseDTO> updateTopic(@RequestBody @Valid UpdateTopicDTO topicDTO,

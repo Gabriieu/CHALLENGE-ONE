@@ -35,6 +35,7 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
     - [Create Topic](#create-topic)
     - [Get Topic By ID](#get-topic-by-id)
     - [Get All Topics](#get-topics)
+    - [Get Topic By Course/Status](#get-topics-by-course-or-status)
     - [Update Topic](#update-topic)
     - [Delete Topic](#delete-topic)
 - [Comments Endpoints](#comments-endpoints)
@@ -277,6 +278,55 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
 > [!NOTE]
 > Neste endpoint é possível utilizar query params para a paginação, como, por exemplo: *?size=2&page=2* e/ou buscar pelo
 > título do tópico utilizando: *?title=umTituloAqui*
+
+### Get Topics By Course Or Status
+
+- **URL:** `/topic/filter?course=example&status=solucionado`
+- **Method:** `GET`
+- **Description:** Obtém uma lista de tópicos filtrados pelo curso ou status.
+- **Response Body:**
+  ```json
+  {
+    "totalPages": "number",
+    "totalElements": "number",
+    "size": "number",
+    "content": [
+        {
+            "id": "number",
+            "title": "string",
+            "text": "string",
+            "status": "string",
+            "author": "string",
+            "course": "string",
+            "created_at": "localdatetime"
+        }
+    ],
+    "number": "number",
+    "sort": {
+        "empty": "boolean",
+        "sorted": "boolean",
+        "unsorted": "boolean"
+    },
+    "first": "boolean",
+    "last": "boolean",
+    "numberOfElements": "number",
+    "pageable": {
+        "pageNumber": "number",
+        "pageSize": "number",
+        "sort": {
+            "empty": "boolean",
+            "sorted": "boolean",
+            "unsorted": "boolean"
+        },
+        "offset": "number",
+        "paged": "boolean",
+        "unpaged": "boolean"
+    },
+    "empty": "boolean"
+  }
+
+> [!NOTE]
+> Neste endpoint é imprescindível a query params *course* ou *status*
 
 ### Update Topic
 
