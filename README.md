@@ -408,7 +408,7 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
             "solution": "boolean",
             "topic_id": "number",
             "created_at": "localdatetime",
-            "author_id": "number"
+            "author": "string"
         }
     ],
     "number": "number",
@@ -451,7 +451,7 @@ Projeto realizado em Java + Spring Boot como challenge do curso Oracle One Next 
    "solution": "boolean",
    "topic_id": "number",
    "created_at": "localdatetime",
-   "author_id": "number"
+   "author": "string"
   }
 
 ### Mark Comment As Solution

@@ -12,8 +12,8 @@ public record CommentResponseDTO(
         Long topicId,
         @JsonProperty("created_at")
         LocalDateTime createdAt,
-        @JsonProperty("author_id")
-        Long authorId,
+        @JsonProperty("author")
+        String author,
 
         boolean solution
 ) {
@@ -23,7 +23,7 @@ public record CommentResponseDTO(
                 answer.getText(),
                 answer.getTopic().getId(),
                 answer.getCreatedAt(),
-                answer.getUser().getId(),
+                answer.getUser().getName(),
                 answer.isSolution());
     }
 }

@@ -112,18 +112,12 @@ public class TopicController {
         }
 
         if (course != null && !course.isEmpty() && statusEnum != null) {
-            System.out.println(1);
-            System.out.println(statusEnum);
             var page = topicRepository.findAllByCourseNameAndStatusIsOrderByCreatedAtDesc(course, statusEnum, pagination).map(TopicResponseDTO::new);
             return ResponseEntity.ok(page);
         } else if (course != null && !course.isEmpty()) {
-            System.out.println(2);
-            System.out.println(statusEnum);
             var page = topicRepository.findAllByCourseNameOrderByCreatedAtDesc(course, pagination).map(TopicResponseDTO::new);
             return ResponseEntity.ok(page);
         } else {
-            System.out.println(3);
-            System.out.println(statusEnum);
             var page = topicRepository.findAllByStatusOrderByCreatedAtDesc(statusEnum, pagination).map(TopicResponseDTO::new);
             return ResponseEntity.ok(page);
         }
